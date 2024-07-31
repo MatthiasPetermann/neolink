@@ -19,6 +19,27 @@ does has been reverse engineered.
 
 ## This Fork
 
+This is a friendly and temporary fork of
+[QuantumEntangledAndy's](https://github.com/QuantumEntangledAndy/neolink)
+enhanced version of neolink. My changes remove all dependencies on
+GStreamer and RTSP, making NeoLink usable on platforms where these are
+not available. This ensures NeoLink can be utilized on these platforms,
+especially when integration is intended to occur solely through MQTT.
+
+The fork was created to address the use case of building an MQTT bridge
+for multiple cameras on a minimal Alpine Linux container using musl. A
+static binary without external dependencies was the solution.
+
+```
+RUSTFLAGS='-C target-feature=+crt-static' cargo build --release --target x86_64-unknown-linux-gnu
+```
+
+I'm not a Rust expert, but I think it would be great if there was a way
+to avoid forking and instead make the GStreamer dependencies a
+build-time toggle.
+
+## Original Fork
+
 This fork is an extension of
 [thirtythreeforty's](https://github.com/thirtythreeforty/neolink) with additional
 features not yet in upstream master.
@@ -456,8 +477,8 @@ docker pull quantumentangledandy/neolink
 # network=host, notably macos lacks this option.
 docker run --network host --volume=$PWD/config.toml:/etc/neolink.toml quantumentangledandy/neolink
 ```
-#### Environmental Variables 
-There are currently 2 environmental variables available as part of the container: 
+#### Environmental Variables
+There are currently 2 environmental variables available as part of the container:
 - `NEO_LINK_MODE`: defaults to `"rtsp"` if not set, other options are "mqtt" or "mqtt-rtsp".
 - `NEO_LINK_PORT`: defaults to `8554`, set this to your required port value.
 

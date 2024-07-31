@@ -40,15 +40,12 @@ mod battery;
 mod cmdline;
 mod common;
 mod config;
-mod image;
 mod mqtt;
 mod pir;
 mod ptz;
 mod reboot;
-mod rtsp;
 mod services;
 mod statusled;
-mod talk;
 mod utils;
 
 use cmdline::{Command, Opt};
@@ -88,10 +85,6 @@ async fn main() -> Result<()> {
                 "Deprecated command line option. Please use: `neolink rtsp --config={:?}`",
                 conf_path
             );
-            rtsp::main(rtsp::Opt {}, neo_reactor.clone()).await?;
-        }
-        Some(Command::Rtsp(opts)) => {
-            rtsp::main(opts, neo_reactor.clone()).await?;
         }
         Some(Command::StatusLight(opts)) => {
             statusled::main(opts, neo_reactor.clone()).await?;
@@ -105,20 +98,8 @@ async fn main() -> Result<()> {
         Some(Command::Ptz(opts)) => {
             ptz::main(opts, neo_reactor.clone()).await?;
         }
-        Some(Command::Talk(opts)) => {
-            talk::main(opts, neo_reactor.clone()).await?;
-        }
         Some(Command::Mqtt(opts)) => {
             mqtt::main(opts, neo_reactor.clone()).await?;
-        }
-        Some(Command::MqttRtsp(opts)) => {
-            tokio::select! {
-                v = mqtt::main(opts, neo_reactor.clone()) => v,
-                v = rtsp::main(rtsp::Opt {}, neo_reactor.clone()) => v,
-            }?;
-        }
-        Some(Command::Image(opts)) => {
-            image::main(opts, neo_reactor.clone()).await?;
         }
         Some(Command::Battery(opts)) => {
             battery::main(opts, neo_reactor.clone()).await?;

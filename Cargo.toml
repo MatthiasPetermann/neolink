@@ -13,20 +13,13 @@ members = [
 
 [dependencies]
 anyhow = "1.0.70"
-async-stream = "0.3.5"
 base64 = "0.22.0"
-byte-slice-cast = "1.2.2"
 bytes = "1.6.0"
 clap = { version = "4.2.2", features = ["derive", "cargo"] }
-crossbeam-channel = "0.5.8"
 dirs = "5.0.1"
 env_logger = "0.11.3"
 fcm-push-listener = "2.0.3"
 futures = "0.3.28"
-gstreamer = "0.22.3"
-gstreamer-app = { version = "0.22.0", features = ["v1_20"] }
-gstreamer-rtsp = { version = "0.22.0", features = ["v1_20"] }
-gstreamer-rtsp-server = { version = "0.22.0", features = ["v1_20"] }
 heck = "0.5.0"
 log = { version = "0.4.17", features = [ "release_max_level_debug" ] }
 md5 = "0.7.0"
